@@ -1,12 +1,12 @@
 import { configureStore, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Impacto } from "../types/impacto";
-import { Probabilidad } from "../types/probabilidad";
-import { Respuesta } from "../types/respuesta";
+import { IImpacto } from "../types/IImpacto";
+import { IProbabilidad } from "../types/IProbabilidad";
+import { IRespuesta } from "../types/IRespuesta";
 
 interface appState {
-    respuestas: Respuesta[]
-    impactos: Impacto[]
-    probabilidades: Probabilidad[]
+    respuestas: IRespuesta[]
+    impactos: IImpacto[]
+    probabilidades: IProbabilidad[]
 }
 
 const initialState: appState = {
@@ -19,13 +19,13 @@ const state = createSlice({
     name: "global",
     initialState,
     reducers: {
-        saveRespuestas: (state, action: PayloadAction<Respuesta[]>) => {
+        saveRespuestas: (state, action: PayloadAction<IRespuesta[]>) => {
             state.respuestas = action.payload;
         },
-        saveImpactos: (state, action: PayloadAction<Impacto[]>) => {
+        saveImpactos: (state, action: PayloadAction<IImpacto[]>) => {
             state.impactos = action.payload;
         },
-        saveProbabilidades: (state, action: PayloadAction<Probabilidad[]>) => {
+        saveProbabilidades: (state, action: PayloadAction<IProbabilidad[]>) => {
             state.probabilidades = action.payload;
         }
     }

@@ -1,45 +1,21 @@
 import { useEffect, useState } from "react";
-import axios from 'axios';
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { globalSelector } from "../store";
+import { ICreateRiesgo, IRiesgo } from "../types/IRiesgo";
+import { Riesgo } from "../api/Riesgo";
 
 export const RiesgoPage = () => {
-    const { register, handleSubmit } = useForm();
-    const [riesgos, setRiesgos] = useState<any[]>([]);
-    const [probabilidades, setProbabilidades] = useState<any[]>([]);
-    const [respuestas, setRespuestas] = useState<any[]>([]);
-    const [impactos, setImpactos] = useState<any[]>([]);
+    const [riesgos, setRiesgos] = useState<IRiesgo[]>([]);
+    const { register, handleSubmit } = useForm<ICreateRiesgo>();
+    const impactos = useSelector(globalSelector).impactos;
+    const probabilidades = useSelector(globalSelector).probabilidades;
+    const respuestas = useSelector(globalSelector).respuestas;
 
     const obtenerRiesgos = async () => {
         try {
-            const request = await axios.get("http://localhost:3001/api/riesgo");
-            setRiesgos(request.data);
-        } catch (err) {
-
-        }
-    }
-
-    const obtenerProbabilidades = async () => {
-        try {
-            const request = await axios.get("http://localhost:3001/api/probabilidad");
-            setProbabilidades(request.data);
-        } catch (err) {
-
-        }
-    }
-
-    const obtenerRespuestas = async () => {
-        try {
-            const request = await axios.get("http://localhost:3001/api/respuesta");
-            setRespuestas(request.data);
-        } catch (err) {
-
-        }
-    }
-
-    const obtenerImpactos = async () => {
-        try {
-            const request = await axios.get("http://localhost:3001/api/impacto");
-            setImpactos(request.data);
+            const request = await Riesgo.list();
+            setRiesgos(request);
         } catch (err) {
 
         }
@@ -47,16 +23,13 @@ export const RiesgoPage = () => {
 
     useEffect(() => {
         obtenerRiesgos();
-        obtenerProbabilidades();
-        obtenerRespuestas();
-        obtenerImpactos();
     }, [])
 
-    const onSubmit = async (e: any) => {
+    const onSubmit = async (data: ICreateRiesgo) => {
         try {
-            const request = await axios.post("http://localhost:3001/api/riesgo", e, { headers: { "Content-type": "application/json" } });
-            setRiesgos(prev => [...prev, request.data]);
-        } catch (err:any) {
+            const request = await Riesgo.create(data);
+            setRiesgos(prev => [...prev, request]);
+        } catch (err: any) {
             console.log(err.message);
         }
     }
