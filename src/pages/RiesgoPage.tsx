@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import swal from 'sweetalert';
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { globalSelector } from "../store";
@@ -30,7 +31,20 @@ export const RiesgoPage = () => {
             const request = await Riesgo.create(data);
             setRiesgos(prev => [...prev, request]);
         } catch (err: any) {
-            console.log(err.message);
+            if (err.response) {
+                const { data } = err.response;
+                swal({
+                    title: "Error",
+                    text: data.message.join(", "),
+                    icon: "error"
+                })
+            }else{
+                swal({
+                    title: "Error",
+                    text: "Ha ocurrido un error y no se pudo registrar el riesgo",
+                    icon: "error"
+                })
+            }
         }
     }
 
@@ -38,7 +52,7 @@ export const RiesgoPage = () => {
         <div>
             <h1 className="mt-4 text-center">Panel del riesgo</h1>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
                 <div className="container mt-5">
                     <div className="row">
 
@@ -50,6 +64,7 @@ export const RiesgoPage = () => {
                         <div className="col">
                             <label className="form-label">Impacto</label>
                             <select className="form-select" {...register("impactoId", { valueAsNumber: true })}>
+                                <option value=""></option>
                                 {impactos.map(p => <option key={p.id} value={p.id}>{p.impacto}</option>)}
                             </select>
                         </div>
@@ -57,6 +72,7 @@ export const RiesgoPage = () => {
                         <div className="col">
                             <label className="form-label">Probabilidad</label>
                             <select className="form-select" {...register("probabilidadId", { valueAsNumber: true })}>
+                                <option value=""></option>
                                 {probabilidades.map(p => <option key={p.id} value={p.id}>{p.probabilidad}</option>)}
                             </select>
                         </div>
@@ -64,6 +80,7 @@ export const RiesgoPage = () => {
                         <div className="col">
                             <label className="form-label">Respuesta</label>
                             <select className="form-select" {...register("respuestaId", { valueAsNumber: true })}>
+                                <option value=""></option>
                                 {respuestas.map(p => <option key={p.id} value={p.id}>{p.respuesta}</option>)}
                             </select>
                         </div>
