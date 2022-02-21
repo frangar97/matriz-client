@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import swal from 'sweetalert';
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { globalSelector } from "../store";
+import { impactosSelector, probabilidadesSelector, respuestasSelector } from "../store";
 import { ICreateRiesgo, IRiesgo } from "../types/IRiesgo";
 import { Riesgo } from "../api/Riesgo";
 
 export const RiesgoPage = () => {
     const [riesgos, setRiesgos] = useState<IRiesgo[]>([]);
     const { register, handleSubmit } = useForm<ICreateRiesgo>();
-    const impactos = useSelector(globalSelector).impactos;
-    const probabilidades = useSelector(globalSelector).probabilidades;
-    const respuestas = useSelector(globalSelector).respuestas;
+    const impactos = useSelector(impactosSelector);
+    const probabilidades = useSelector(probabilidadesSelector);
+    const respuestas = useSelector(respuestasSelector);
 
     const obtenerRiesgos = async () => {
         try {
@@ -38,7 +38,7 @@ export const RiesgoPage = () => {
                     text: data.message.join(", "),
                     icon: "error"
                 })
-            }else{
+            } else {
                 swal({
                     title: "Error",
                     text: "Ha ocurrido un error y no se pudo registrar el riesgo",

@@ -41,5 +41,9 @@ const store = configureStore({
 type RootState = ReturnType<typeof store.getState>
 
 export const globalSelector = (e: RootState) => e.global;
+export const respuestasSelector = (e: RootState) => e.global.respuestas;
+export const impactosSelector = (e: RootState) => e.global.impactos;
+export const probabilidadesSelector = (e: RootState) => e.global.probabilidades;
+
 export const { saveImpactos, saveRespuestas, saveProbabilidades } = state.actions;
 export default store;

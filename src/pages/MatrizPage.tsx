@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import { Box } from "../components/Box"
-import axios from 'axios';
 import { IRiesgo } from "../types/IRiesgo";
 import { useSelector } from "react-redux";
-import { globalSelector } from "../store";
+import { impactosSelector, probabilidadesSelector } from "../store";
+import { Riesgo } from "../api/Riesgo";
 
 export const MatrizPage = () => {
     const [riesgos, setRiesgos] = useState<IRiesgo[]>([]);
     const [riesgosSeleccionados, setRiesgosSeleccionados] = useState<IRiesgo[]>([]);
-    const probabilidades = useSelector(globalSelector).probabilidades;
-    const impactos = useSelector(globalSelector).impactos;
+    const probabilidades = useSelector(probabilidadesSelector);
+    const impactos = useSelector(impactosSelector);
 
     const obtenerRiesgos = async () => {
         try {
-            const request = await axios.get("http://localhost:3001/api/riesgo");
-            setRiesgos(request.data);
+            const request = await Riesgo.list();
+            setRiesgos(request);
         } catch (err) {
 
         }
