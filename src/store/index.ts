@@ -2,17 +2,23 @@ import { configureStore, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IImpacto } from "../types/IImpacto";
 import { IProbabilidad } from "../types/IProbabilidad";
 import { IRespuesta } from "../types/IRespuesta";
+import { ITipoControl } from "../types/ITipoControl";
+import { ITipoEjecucion } from "../types/ITipoEjecucion";
 
 interface appState {
     respuestas: IRespuesta[]
     impactos: IImpacto[]
-    probabilidades: IProbabilidad[]
+    probabilidades: IProbabilidad[],
+    tiposEjecucion: ITipoEjecucion[],
+    tiposControl: ITipoControl[]
 }
 
 const initialState: appState = {
     respuestas: [],
     impactos: [],
-    probabilidades: []
+    probabilidades: [],
+    tiposEjecucion: [],
+    tiposControl: []
 }
 
 const state = createSlice({
@@ -27,6 +33,12 @@ const state = createSlice({
         },
         saveProbabilidades: (state, action: PayloadAction<IProbabilidad[]>) => {
             state.probabilidades = action.payload;
+        },
+        saveTiposEjecucion: (state, action: PayloadAction<ITipoEjecucion[]>) => {
+            state.tiposEjecucion = action.payload;
+        },
+        saveTiposControl: (state, action: PayloadAction<ITipoControl[]>) => {
+            state.tiposControl = action.payload;
         }
     }
 });
@@ -44,6 +56,8 @@ export const globalSelector = (e: RootState) => e.global;
 export const respuestasSelector = (e: RootState) => e.global.respuestas;
 export const impactosSelector = (e: RootState) => e.global.impactos;
 export const probabilidadesSelector = (e: RootState) => e.global.probabilidades;
+export const tiposEjecucionSelector = (e: RootState) => e.global.tiposEjecucion;
+export const tiposControlSelector = (e: RootState) => e.global.tiposControl;
 
-export const { saveImpactos, saveRespuestas, saveProbabilidades } = state.actions;
+export const { saveImpactos, saveRespuestas, saveProbabilidades, saveTiposEjecucion, saveTiposControl } = state.actions;
 export default store;

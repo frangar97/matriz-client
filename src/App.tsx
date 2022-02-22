@@ -4,11 +4,13 @@ import { Route, Routes } from "react-router-dom";
 import { Impacto } from "./api/Impacto";
 import { Probabilidad } from "./api/Probabilidad";
 import { Respuesta } from "./api/Respuesta";
+import { TipoControl } from "./api/TipoControl";
+import { TipoEjecucion } from "./api/TipoEjecucion";
 import { Sidebar } from "./components/Sidebar";
 import { ControlesPage } from "./pages/ControlesPage";
 import { MatrizPage } from "./pages/MatrizPage";
 import { RiesgoPage } from "./pages/RiesgoPage";
-import { saveImpactos, saveProbabilidades, saveRespuestas } from "./store";
+import { saveImpactos, saveProbabilidades, saveRespuestas, saveTiposControl, saveTiposEjecucion } from "./store";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -28,10 +30,22 @@ const App = () => {
     dispatch(saveImpactos(request));
   }
 
+  const obtenerTiposControl = async () => {
+    const request = await TipoControl.list();
+    dispatch(saveTiposControl(request));
+  }
+
+  const obtenerTipoEjecucion = async () => {
+    const request = await TipoEjecucion.list();
+    dispatch(saveTiposEjecucion(request));
+  }
+
   useEffect(() => {
     obtenerImpactos();
     obtenerProbabilidades();
     obtenerRespuestas();
+    obtenerTiposControl();
+    obtenerTipoEjecucion();
   }, [])
 
   return (
