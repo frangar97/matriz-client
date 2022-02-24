@@ -19,8 +19,8 @@ export const Box: FC<Prop> = ({ backgroundColor, probabilidad, impacto, riesgos,
 
     return (
         <div onClick={() => { setRiesgos(boxRiesgos) }} style={{ backgroundColor }} className="box">
-            <ul>
-                {boxRiesgos.map(r => <li key={r.id}>{r.nombre}</li>)}
+            <ul style={{ listStyle: "none", paddingLeft: 0 }}>
+                {boxRiesgos.map(r => <li style={{ backgroundColor: "white", borderRadius: "5px", margin: "2px", color: "black", textAlign: "center" }} key={r.id}>{r.nombre}</li>)}
             </ul>
         </div>
     )

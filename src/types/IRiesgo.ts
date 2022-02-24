@@ -1,3 +1,4 @@
+import { IControl } from "./IControl";
 import { IImpacto } from "./IImpacto";
 import { IProbabilidad } from "./IProbabilidad";
 import { IRespuesta } from "./IRespuesta";
@@ -7,7 +8,8 @@ export interface IRiesgo {
     nombre: string
     impacto: IImpacto
     probabilidad: IProbabilidad
-    respuesta: IRespuesta
+    respuesta: IRespuesta,
+    controles: IControl[]
 }
 
 export interface ICreateRiesgo {

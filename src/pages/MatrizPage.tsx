@@ -4,10 +4,12 @@ import { IRiesgo } from "../types/IRiesgo";
 import { useSelector } from "react-redux";
 import { impactosSelector, probabilidadesSelector } from "../store";
 import { Riesgo } from "../api/Riesgo";
+import { ModalControles } from "../components/ModalControles";
 
 export const MatrizPage = () => {
     const [riesgos, setRiesgos] = useState<IRiesgo[]>([]);
     const [riesgosSeleccionados, setRiesgosSeleccionados] = useState<IRiesgo[]>([]);
+    const [show, setShow] = useState(false);
     const probabilidades = useSelector(probabilidadesSelector);
     const impactos = useSelector(impactosSelector);
 
@@ -23,6 +25,9 @@ export const MatrizPage = () => {
     useEffect(() => {
         obtenerRiesgos();
     }, [])
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     return (
         <div>
@@ -77,6 +82,7 @@ export const MatrizPage = () => {
                         <th scope="col">Impacto</th>
                         <th scope="col">Probabilidad</th>
                         <th scope="col">Respuesta</th>
+                        <th scope="col">Controles</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -87,6 +93,9 @@ export const MatrizPage = () => {
                             <td>{riesgo.impacto.impacto}</td>
                             <td>{riesgo.probabilidad.probabilidad}</td>
                             <td>{riesgo.respuesta.respuesta}</td>
+                            <td>{(riesgo.controles.length > 0)
+                                ? <><button className="btn btn-primary" onClick={handleShow}>Mostrar Controles</button> <ModalControles show={show} handleClose={handleClose} controles={riesgo.controles} /></>
+                                : "No hay controles"}</td>
                         </tr>
                     ))}
                 </tbody>
