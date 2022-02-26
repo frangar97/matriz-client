@@ -8,6 +8,7 @@ import { TipoControl } from "./api/TipoControl";
 import { TipoEjecucion } from "./api/TipoEjecucion";
 import { Sidebar } from "./components/Sidebar";
 import { ControlesPage } from "./pages/ControlesPage";
+import { DashboardPage } from "./pages/DashboardPage";
 import { MatrizPage } from "./pages/MatrizPage";
 import { RiesgoPage } from "./pages/RiesgoPage";
 import { saveImpactos, saveProbabilidades, saveRespuestas, saveTiposControl, saveTiposEjecucion } from "./store";
@@ -56,6 +57,7 @@ const App = () => {
           <Route path="/" element={<MatrizPage />} />
           <Route path="/riesgo" element={<RiesgoPage />} />
           <Route path="/control" element={<ControlesPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
         </Routes>
       </div>
     </div>

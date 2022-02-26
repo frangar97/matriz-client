@@ -11,6 +11,7 @@ export const Sidebar = () => {
                 <NavLink to="/" className="list-group-item">Matriz</NavLink>
                 <NavLink to="/riesgo" className="list-group-item">Riesgos</NavLink>
                 <NavLink to="/control" className="list-group-item">Controles</NavLink>
+                <NavLink to="/dashboard" className="list-group-item">Dashboard</NavLink>
             </div>
         </div>
     )

@@ -31,3 +31,12 @@ html,body{
   justify-content: center;
   align-items: center;
 }
+
+.dashcontainer{
+  width: 90%;
+  margin: 0 auto;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(2, 500px);
+  grid-template-rows: repeat(2, 200px);
+}

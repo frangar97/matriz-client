@@ -5,6 +5,11 @@ import App from './App'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './store'
+import {Chart, ArcElement} from 'chart.js'
+import ChartDataLabels from "chartjs-plugin-datalabels";
+Chart.register(ArcElement);
+Chart.register(ChartDataLabels);
+
 
 ReactDOM.render(
   <React.StrictMode>
