@@ -18,3 +18,8 @@ export interface ICreateRiesgo {
     probabilidadId: number
     respuestaId: number
 }
+
+export interface IAddControlRiesgo {
+    riesgoId: number
+    controlesId: number[]
+}

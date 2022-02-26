@@ -3,11 +3,18 @@ import swal from 'sweetalert';
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { impactosSelector, probabilidadesSelector, respuestasSelector } from "../store";
-import { ICreateRiesgo, IRiesgo } from "../types/IRiesgo";
+import { IAddControlRiesgo, ICreateRiesgo, IRiesgo } from "../types/IRiesgo";
 import { Riesgo } from "../api/Riesgo";
+import { IControl } from "../types/IControl";
+import { Control } from "../api/Control";
+import { ModalAgregarControles } from "../components/ModalAgregarControl";
 
 export const RiesgoPage = () => {
     const [riesgos, setRiesgos] = useState<IRiesgo[]>([]);
+    const [controles, setControles] = useState<IControl[]>([]);
+    const [show, setShow] = useState(false);
+    const [riesgoId, setRiesgoId] = useState(0);
+    const [controlesRiesgo, setcontrolesRiesgo] = useState<IControl[]>([]);
     const { register, handleSubmit } = useForm<ICreateRiesgo>();
     const impactos = useSelector(impactosSelector);
     const probabilidades = useSelector(probabilidadesSelector);
@@ -22,8 +29,60 @@ export const RiesgoPage = () => {
         }
     }
 
+    const obtenerControles = async () => {
+        try {
+            const request = await Control.list();
+            setControles(request);
+        } catch (err) {
+
+        }
+    }
+
+    const agregarControles = async (controles: IAddControlRiesgo) => {
+        try {
+            const request = await Riesgo.addControl(controles);
+            const index = riesgos.findIndex(x => x.id === request.id);
+            if (index) {
+                const copiaRiesgos = [...riesgos];
+                copiaRiesgos[index].controles = request.controles
+            }
+
+            setShow(false);
+
+            swal({
+                title: "Exito",
+                text: "Los controles han sido agregados con exito",
+                icon: "success"
+            })
+        } catch (err: any) {
+            setShow(false);
+            if (err.response) {
+                const { data } = err.response;
+                swal({
+                    title: "Error",
+                    text: data.message.join(", "),
+                    icon: "error"
+                })
+            } else {
+                swal({
+                    title: "Error",
+                    text: "Ha ocurrido un error y no se pudo registrar el riesgo",
+                    icon: "error"
+                })
+            }
+        }
+    }
+
+    const handleClose = () => setShow(false);
+    const handleShow = (id: number, controlesRiesgo: IControl[]) => {
+        setRiesgoId(id);
+        setcontrolesRiesgo(controlesRiesgo);
+        setShow(true)
+    }
+
     useEffect(() => {
         obtenerRiesgos();
+        obtenerControles();
     }, [])
 
     const onSubmit = async (data: ICreateRiesgo) => {
@@ -51,6 +110,7 @@ export const RiesgoPage = () => {
     return (
         <div>
             <h1 className="mt-4 text-center">Panel del riesgo</h1>
+            <ModalAgregarControles show={show} handleClose={handleClose} controles={controles} agregarControles={agregarControles} riesgoId={riesgoId} controlesRiesgo={controlesRiesgo} />
 
             <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
                 <div className="container mt-5">
@@ -100,6 +160,7 @@ export const RiesgoPage = () => {
                         <th scope="col">Impacto</th>
                         <th scope="col">Probabilidad</th>
                         <th scope="col">Respuesta</th>
+                        <th scope="col">Controles</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -110,6 +171,7 @@ export const RiesgoPage = () => {
                             <td>{riesgo.impacto.impacto}</td>
                             <td>{riesgo.probabilidad.probabilidad}</td>
                             <td>{riesgo.respuesta.respuesta}</td>
+                            <td><button className="btn btn-primary" onClick={() => handleShow(riesgo.id, riesgo.controles)}>Agregar controles</button></td>
                         </tr>
                     ))}
                 </tbody>
