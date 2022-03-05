@@ -49,7 +49,7 @@ export const ControlesPage = () => {
 
     return (
         <div>
-            <h1 className="mt-4 text-center">Panel del riesgo</h1>
+            <h1 className="mt-4 text-center">Panel de controles</h1>
 
             <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
                 <div className="container mt-5">
