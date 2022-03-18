@@ -146,6 +146,16 @@ export const RiesgoPage = () => {
                         </div>
 
                         <div className="col">
+                            <label className="form-label">Dueño</label>
+                            <input className="form-control" type="text" {...register("owner")} />
+                        </div>
+
+                        <div className="col">
+                            <label className="form-label">Costo</label>
+                            <input className="form-control" type="text" {...register("costo")} />
+                        </div>
+
+                        <div className="col">
                             <input type="submit" value="Crear" className="btn btn-success mt-4" />
                         </div>
                     </div>
@@ -160,6 +170,8 @@ export const RiesgoPage = () => {
                         <th scope="col">Impacto</th>
                         <th scope="col">Probabilidad</th>
                         <th scope="col">Respuesta</th>
+                        <th scope="col">Dueño</th>
+                        <th scope="col">Costo</th>
                         <th scope="col">Controles</th>
                     </tr>
                 </thead>
@@ -171,6 +183,8 @@ export const RiesgoPage = () => {
                             <td>{riesgo.impacto.impacto}</td>
                             <td>{riesgo.probabilidad.probabilidad}</td>
                             <td>{riesgo.respuesta.respuesta}</td>
+                            <td>{riesgo.owner}</td>
+                            <td>{riesgo.costo}</td>
                             <td><button className="btn btn-primary" onClick={() => handleShow(riesgo.id, riesgo.controles)}>Agregar controles</button></td>
                         </tr>
                     ))}

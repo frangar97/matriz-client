@@ -6,6 +6,8 @@ import { IRespuesta } from "./IRespuesta";
 export interface IRiesgo {
     id: number
     nombre: string
+    owner: string
+    costo: string
     impacto: IImpacto
     probabilidad: IProbabilidad
     respuesta: IRespuesta,
@@ -14,6 +16,8 @@ export interface IRiesgo {
 
 export interface ICreateRiesgo {
     nombre: string
+    owner: string
+    costo: string
     impactoId: number
     probabilidadId: number
     respuestaId: number

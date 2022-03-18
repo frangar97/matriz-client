@@ -82,6 +82,8 @@ export const MatrizPage = () => {
                         <th scope="col">Impacto</th>
                         <th scope="col">Probabilidad</th>
                         <th scope="col">Respuesta</th>
+                        <th scope="col">Dueño</th>
+                        <th scope="col">Costo</th>
                         <th scope="col">Controles</th>
                     </tr>
                 </thead>
@@ -93,6 +95,8 @@ export const MatrizPage = () => {
                             <td>{riesgo.impacto.impacto}</td>
                             <td>{riesgo.probabilidad.probabilidad}</td>
                             <td>{riesgo.respuesta.respuesta}</td>
+                            <td>{riesgo.owner}</td>
+                            <td>{riesgo.costo}</td>
                             <td>{(riesgo.controles.length > 0)
                                 ? <><button className="btn btn-primary" onClick={handleShow}>Mostrar Controles</button> <ModalControles show={show} handleClose={handleClose} controles={riesgo.controles} /></>
                                 : "No hay controles"}</td>
