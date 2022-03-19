@@ -23,6 +23,18 @@ const generarPlanSeguridad = (riesgo: string): string => {
         return "Bloqueo de ip del dispositivo y desconexión inmediata.";
     }
 
+    if (riesgo.includes("personal no autorizado")) {
+        return "Revisión de identificación para validación y saber que cuenta con los permisos requeridos para ingresar a la instalación.";
+    }
+
+    if (riesgo.includes("datos sensibles")) {
+        return "Realizar backups de seguridad de la información.";
+    }
+
+    if (riesgo.includes("programas maliciosos")) {
+        return "Configurar roles en el dispositivo para que solo personal con roles requeridos pueda instalar software.";
+    }
+
     return "";
 }
 
@@ -45,6 +57,10 @@ const generarPlanContingencia = (riesgo: string): string => {
 
     if (riesgo.includes("personal no autorizado")) {
         return "Retiro de la persona de las instalaciones y verificar el estado de los equipos e información de la organización.";
+    }
+
+    if (riesgo.includes("programas maliciosos")) {
+        return "Realizar backups de seguridad de la información y colocar el programa en una blacklist para evitar futuras instalaciones.";
     }
 
     return "";
