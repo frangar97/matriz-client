@@ -8,6 +8,7 @@ import { Riesgo } from "../api/Riesgo";
 import { IControl } from "../types/IControl";
 import { Control } from "../api/Control";
 import { ModalAgregarControles } from "../components/ModalAgregarControl";
+import { riesgosLocal } from "../data/riesgos";
 
 export const RiesgoPage = () => {
     const [riesgos, setRiesgos] = useState<IRiesgo[]>([]);
@@ -117,8 +118,11 @@ export const RiesgoPage = () => {
                     <div className="row">
 
                         <div className="col">
-                            <label className="form-label">Nombre</label>
-                            <input className="form-control" type="text" {...register("nombre")} />
+                            <label className="form-label">Riesgo</label>
+                            <select className="form-select" {...register("nombre")}>
+                                <option value=""></option>
+                                {riesgosLocal.map(p => <option key={p.id} value={p.nombre}>{p.nombre}</option>)}
+                            </select>
                         </div>
 
                         <div className="col">
